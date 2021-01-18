@@ -20,4 +20,14 @@ sumDigits [] = 0
 sumDigits (x:xs) = (x `div` 10) + (x `mod` 10) + sumDigits xs
 
 validate :: Integer -> Bool
-validate x = mod (sumDigits (doubleEveryOther  (toDigitsRev x))) 10 == 0
+validate x = mod (sumDigits (doubleEveryOther (toDigitsRev x))) 10 == 0
+
+type Peg = String
+
+type Move = (Peg, Peg)
+
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi 1 first second third = [(first, third)]
+hanoi n first second third =
+  hanoi (n - 1) first third second ++
+  [(first, third)] ++ hanoi (n - 1) second first third
